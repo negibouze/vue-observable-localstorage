@@ -1,19 +1,15 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
 import { useObservableLocalStorage } from '../composables/use-observable-local-storage'
-const myObject1 = useLocalStorage('my-object1', {}, { writeDefaults: false })
-const myObject2 = useObservableLocalStorage('my-object2', {}, { writeDefaults: false })
+const object1 = useLocalStorage('my-object1', {}, { writeDefaults: false })
+const object2 = useObservableLocalStorage('my-object2', {}, { writeDefaults: false })
 </script>
 
 <template>
   <div class="wrapper">
-    <div>
-      <h3>useLocalStorage</h3>
-      <div>{{ myObject1 }}</div>
-    </div>
-    <div>
-      <h3>useObservableLocalStorage</h3>
-      <div>{{ myObject2 }}</div>
+    <div v-for="(v, i) in [object1, object2]" :key="i">
+      <h3>{{ i === 0 ? 'useLocalStorage' : 'useObservableLocalStorage' }}</h3>
+      <div>{{ v }}</div>
     </div>
   </div>
 </template>

@@ -24,7 +24,7 @@ const useMyObject = (obj: ObjectType) => {
   }
   const canAdd = computed(() => state.key !== '' && state.value !== '')
   const canDelete = computed(() => state.key !== '')
-  return { addItem, canAdd, canDelete, deleteItem, state }
+  return { addItem, canAdd, canDelete, deleteItem, state, storage: obj }
 }
 
 const object1 = useMyObject(useLocalStorage<Value>('my-object1', {}))
@@ -33,26 +33,19 @@ const object2 = useMyObject(useObservableLocalStorage<Value>('my-object2', {}))
 
 <template>
   <div class="wrapper">
-    <div>
-      <h3>useLocalStorage</h3>
+    <div v-for="(v, i) in [object1, object2]" :key="i">
+      <h3>{{ i === 0 ? 'useLocalStorage' : 'useObservableLocalStorage' }}</h3>
       <div>
-        <label for="key1">Key:</label><br />
-        <input type="text" id="key1" v-model="object1.state.key" /><br />
-        <label for="value1">Value:</label><br />
-        <input type="text" id="value1" v-model="object1.state.value" /><br /><br />
-        <button :disabled="!object1.canAdd.value" @click="object1.addItem">追加</button>
-        <button :disabled="!object1.canDelete.value" @click="object1.deleteItem">削除</button>
+        <label :for="`key${i + 1}}`">Key:</label><br />
+        <input type="text" :id="`key${i + 1}}`" v-model="v.state.key" /><br />
+        <label :for="`value${i + 1}}`">Value:</label><br />
+        <input type="text" :id="`value${i + 1}}`" v-model="v.state.value" /><br /><br />
+        <button :disabled="!v.canAdd.value" @click="v.addItem">追加</button>
+        <button :disabled="!v.canDelete.value" @click="v.deleteItem">削除</button>
       </div>
-    </div>
-    <div>
-      <h3>useObservableLocalStorage</h3>
-      <div>
-        <label for="key2">Key:</label><br />
-        <input type="text" id="key2" v-model="object2.state.key" /><br />
-        <label for="value2">Value:</label><br />
-        <input type="text" id="value2" v-model="object2.state.value" /><br /><br />
-        <button :disabled="!object2.canAdd.value" @click="object2.addItem">追加</button>
-        <button :disabled="!object2.canDelete.value" @click="object2.deleteItem">削除</button>
+      <div style="margin-top: 8px">
+        <h3>LocalStorage</h3>
+        <div>{{ v.storage }}</div>
       </div>
     </div>
   </div>
