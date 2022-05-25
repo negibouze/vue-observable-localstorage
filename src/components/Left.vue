@@ -28,7 +28,9 @@ const useMyObject = (obj: ObjectType) => {
 }
 
 const object1 = useMyObject(useLocalStorage<Value>('my-object1', {}))
-const object2 = useMyObject(useObservableLocalStorage<Value>('my-object2', {}))
+const object2 = useMyObject(
+  useObservableLocalStorage<Value>({ key: 'my-object2', initialValue: {} })
+)
 </script>
 
 <template>
