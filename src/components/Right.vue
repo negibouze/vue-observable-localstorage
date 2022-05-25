@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
 import { useObservableLocalStorage } from '../composables/use-observable-local-storage'
+
 const object1 = useLocalStorage('my-object1', {}, { writeDefaults: false })
 const object2 = useObservableLocalStorage('my-object2', {}, { writeDefaults: false })
 </script>

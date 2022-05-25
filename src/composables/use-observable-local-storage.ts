@@ -22,8 +22,8 @@ export const useObservableLocalStorage: Type = (...params) => {
   return computed({
     get: () => item.value,
     set: (newVal) => {
-      const serializer = StorageSerializers[getType(newVal)] ?? JSON.stringify
-      const newValue = serializer.write(newVal)
+      const serializer = StorageSerializers[getType(newVal)].write ?? JSON.stringify
+      const newValue = serializer(newVal)
       const event = new StorageEvent('storage', { key, newValue })
       window.dispatchEvent(event)
     },
